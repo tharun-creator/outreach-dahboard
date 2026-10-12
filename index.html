@@ -1,0 +1,1021 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Outreach HQ</title>
+<style>
+:root{
+  --page:#e7e6e1; --shell:#f6f5f2; --card:#ffffff; --ink:#25262b; --mut:#8b8c93; --line:#ebeae5;
+  --chip:#ecebe7; --dark:#34353a; --green:#7ed56f; --greenbg:#e3f5de; --greenink:#1f6b2a;
+  --red:#d6403a; --redbg:#fde4e2; --amb:#a16207; --ambbg:#fdf0cf;
+  --lav:#f1eefe; --peach:#fdf1ea; --cream:#fdf8e6; --mint:#e6f6f0; --purple:#7c5cff; --yellow:#f4c542; --teal:#4fcfae;
+  --shadow:0 1px 2px rgba(30,30,30,.04), 0 6px 18px rgba(30,30,30,.05);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--page);color:var(--ink);font:14px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+.shell{max-width:1500px;margin:0 auto;background:var(--shell);border-radius:28px;display:grid;grid-template-columns:232px 1fr;min-height:calc(100vh - 48px);box-shadow:0 20px 50px rgba(0,0,0,.08);overflow:hidden}
+
+/* ---------- sidebar ---------- */
+.side{padding:24px 14px 18px;display:flex;flex-direction:column;gap:2px;border-right:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;padding:0 10px 18px;font-size:17px}
+.logo{width:34px;height:34px;border-radius:10px;background:var(--dark);color:#fff;display:grid;place-items:center;font-weight:800}
+.navlabel{font-size:12px;color:var(--mut);padding:14px 12px 6px}
+.nv{display:flex;align-items:center;gap:10px;border:0;background:transparent;padding:10px 12px;border-radius:11px;text-align:left;color:#4a4b52;font-weight:500}
+.nv:hover{background:#eceae6}
+.nv.on{background:var(--green);color:#173b12;font-weight:600}
+.nv .nb{margin-left:auto;font-size:11px;background:#e3e2de;border-radius:99px;padding:0 8px;color:#55565c}
+.nv .nb:empty{display:none}
+.nv.on .nb{background:rgba(255,255,255,.55)}
+.sidefoot{margin-top:auto;background:var(--card);border-radius:16px;padding:14px;box-shadow:var(--shadow)}
+.sidefoot .t{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.1}
+.sidefoot .ist{font-size:10px;font-weight:700;background:var(--dark);color:#fff;border-radius:99px;padding:1px 7px;margin-left:6px;vertical-align:middle}
+.sidefoot .d{font-size:12px;color:var(--mut);margin-bottom:8px}
+.slot{display:inline-block;border-radius:99px;padding:3px 10px;font-size:12px;font-weight:600}
+.slot.prime{background:var(--greenbg);color:var(--greenink)}
+.slot.good{background:var(--mint);color:#0f766e}
+.slot.fair{background:var(--ambbg);color:var(--amb)}
+.slot.avoid{background:var(--redbg);color:var(--red)}
+.slotnext{font-size:11.5px;color:var(--mut);margin-top:6px}
+
+/* ---------- main ---------- */
+.main{padding:24px 28px 40px;min-width:0}
+.top{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.top h1{margin:0;font-size:26px;font-weight:600}
+.tools{display:flex;gap:10px;align-items:center}
+.search{position:relative}
+.search input{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:9px 34px 9px 12px;width:240px;outline:none}
+.search kbd{position:absolute;right:8px;top:7px;font-size:11px;color:var(--mut);background:var(--chip);border-radius:6px;padding:1px 6px;font-family:inherit}
+.ib{width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;color:#55565c}
+.btn{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:9px 14px;font-weight:600}
+.btn:hover{border-color:#cfcdc6}
+.btn.dark{background:var(--dark);color:#fff;border-color:var(--dark)}
+.btn.green{background:var(--green);border-color:var(--green);color:#173b12}
+.btn.sm{padding:5px 10px;border-radius:9px;font-size:12px}
+.btn.red{color:var(--red)}
+.page{display:none}
+.page.on{display:block}
+
+.card{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:18px}
+.card h2{margin:0 0 12px;font-size:15px;font-weight:600}
+.card .hd{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.card .hd h2{margin:0}
+.mut{color:var(--mut)}
+.small{font-size:12px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px}
+.stack{display:flex;flex-direction:column;gap:16px}
+.greet{margin:4px 0 18px}
+.greet h2{font-size:24px;margin:0;font-weight:600}
+.greet p{margin:2px 0 0;color:var(--mut)}
+
+/* stat strip */
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));padding:6px 4px}
+.st{display:flex;align-items:center;gap:12px;padding:12px 16px;border-left:1px solid var(--line)}
+.st:first-child{border-left:0}
+.sti{width:38px;height:38px;border-radius:12px;background:var(--dark);color:#fff;display:grid;place-items:center;flex:none}
+.stx .l{font-size:12px;color:var(--mut)}
+.stx .v{font-size:20px;font-weight:600;line-height:1.2}
+.bdg{margin-left:auto;font-size:11px;font-weight:600;border-radius:7px;padding:2px 8px;white-space:nowrap}
+.bdg.g{background:var(--greenbg);color:var(--greenink)}
+.bdg.r{background:var(--redbg);color:var(--red)}
+.bdg.a{background:var(--ambbg);color:var(--amb)}
+.bdg.n{background:var(--chip);color:#55565c}
+
+/* tiles */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.tile{border:1px solid var(--line);border-radius:18px;padding:16px;background:var(--card)}
+.tile .h{display:flex;align-items:center;gap:8px;font-weight:600;margin-bottom:22px}
+.tile .h .ico{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;color:#fff}
+.tile .h a{margin-left:auto;font-size:12px;font-weight:400;color:var(--mut);cursor:pointer}
+.tile .r{display:flex;justify-content:space-between;margin-bottom:8px;font-weight:500}
+.pbar{height:7px;background:#ebeae6;border-radius:99px;overflow:hidden}
+.pbar i{display:block;height:100%;border-radius:99px;transition:width .4s}
+.qtiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.qt{border:0;border-radius:18px;padding:14px;display:flex;align-items:center;gap:12px;text-align:left}
+.qt .bx{width:38px;height:38px;border-radius:12px;background:#fff;display:grid;place-items:center;box-shadow:var(--shadow)}
+.qt b{font-size:20px;display:block;line-height:1.1}
+.qt span{font-size:12px;color:var(--mut)}
+.qt .ch{margin-left:auto;color:var(--mut)}
+
+/* focus list */
+.row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border:0}
+.row .nm{flex:1;min-width:0}
+.row .nm b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.av{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
+a.lnk{font-size:12px;text-decoration:none;color:#3b3c42;background:var(--chip);padding:3px 9px;border-radius:99px}
+a.lnk:hover{background:#e0dfda}
+.empty{color:var(--mut);text-align:center;padding:20px 8px}
+
+/* chips */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;align-items:center}
+.chip{border:0;background:var(--chip);color:#4a4b52;border-radius:99px;padding:5px 13px;font-size:13px;display:inline-flex;gap:6px;align-items:center}
+.chip.out{background:var(--card);border:1px solid var(--line)}
+.chip.on{background:var(--dark);color:#fff}
+.chip .n{background:rgba(0,0,0,.08);border-radius:99px;padding:0 7px;font-size:11px}
+.chip.on .n{background:rgba(255,255,255,.25)}
+.chip .d{width:8px;height:8px;border-radius:50%}
+.showing{margin-left:auto;font-size:13px;color:var(--mut)}
+
+/* board */
+.board{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(250px,1fr);gap:14px;overflow-x:auto;padding-bottom:10px;align-items:start}
+.col{background:#e9e8e4;border-radius:18px;padding:10px;min-height:150px}
+.col.won{background:#dcebd4}
+.col.lost{background:#ecebe8}
+.col.over{outline:2px dashed var(--green)}
+.col .ch{display:flex;align-items:center;gap:8px;padding:2px 4px 10px;font-weight:600}
+.col .ch .n{background:rgba(0,0,0,.08);border-radius:99px;padding:0 8px;font-size:12px;font-weight:500}
+.col .ch .m{margin-left:auto;font-size:12px;color:var(--mut);font-weight:400}
+.kc{background:var(--card);border-radius:14px;padding:12px;margin-bottom:10px;box-shadow:var(--shadow);cursor:grab;display:flex;flex-direction:column;gap:8px}
+.kc:hover{box-shadow:0 8px 22px rgba(30,30,30,.1)}
+.kc.faded{opacity:.62}
+.kc .l1{display:flex;gap:10px;align-items:center}
+.kc .l1 .tx{min-width:0}
+.kc .l1 b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kc .l2{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.tb{font-size:11.5px;border-radius:7px;padding:2px 8px;font-weight:600;background:var(--chip);color:#55565c}
+.tb.late{background:var(--redbg);color:var(--red)}
+.tb.today{background:var(--ambbg);color:var(--amb)}
+.alert{background:var(--ambbg);color:#7a4a05;border-radius:9px;padding:7px 9px;font-size:12px}
+.alert.red{background:var(--redbg);color:#a12a24}
+.kc .acts{display:flex;gap:6px;flex-wrap:wrap}
+.kc .acts .btn{flex:1}
+.addlead{width:100%;border:0;background:transparent;color:var(--mut);padding:8px}
+.wonsum{background:var(--card);border-radius:14px;padding:12px;margin-bottom:10px;box-shadow:var(--shadow)}
+.wonsum .r{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px}
+
+/* schedule */
+.cal .hd{margin-bottom:8px}
+.cal .mn{display:flex;align-items:center;gap:8px;font-weight:600}
+.cgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center}
+.cgrid .dw{font-size:12px;color:var(--mut);padding:4px 0}
+.cd{aspect-ratio:1;border:0;border-radius:50%;background:#f1f0ec;position:relative;font-size:13px}
+.cd.out{background:transparent;color:#c1c0bb}
+.cd.today{background:var(--dark);color:#fff}
+.cd.sel{outline:2px solid var(--green)}
+.cd i{position:absolute;bottom:5px;left:50%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:#e8743b}
+.upc{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;align-content:start}
+.uc{border:1px solid var(--line);border-radius:16px;padding:14px;background:var(--card);cursor:pointer}
+.uc:hover{border-color:#cfcdc6}
+.uc .t{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:10px}
+.uc .t span.n{display:flex;align-items:center;gap:7px;font-weight:600;min-width:0}
+.uc .big{font-size:26px;font-weight:500;line-height:1}
+.uc .big small{font-size:14px;color:var(--mut);margin-left:4px}
+.uc .dr{display:flex;justify-content:space-between;font-size:12px;color:var(--mut);margin:12px 0 6px}
+.uc .dr b{color:var(--ink);font-weight:500}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;flex:none}
+.pill{font-size:11px;border-radius:7px;padding:2px 8px;background:var(--lav);color:#5b3df5;font-weight:600;white-space:nowrap}
+
+/* playbook */
+.tip{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.tip:last-child{border:0}
+.tip .n{width:26px;height:26px;border-radius:8px;background:var(--chip);display:grid;place-items:center;font-size:12px;font-weight:700;flex:none}
+.tip.core .n{background:var(--green);color:#173b12}
+.tip b{display:block}
+.tip span{color:var(--mut);font-size:13px}
+.times{width:100%;border-collapse:collapse;font-size:13px}
+.times td{padding:8px 4px;border-bottom:1px solid var(--line)}
+.times tr:last-child td{border:0}
+.tpl{border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:10px}
+.tpl .t{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.tpl pre{margin:0 0 8px;white-space:pre-wrap;font:inherit;color:#55565c;font-size:13px}
+.q{background:var(--cream);border-radius:12px;padding:10px 12px;margin-bottom:8px;font-size:13px}
+.q b{display:block;color:var(--amb)}
+.step{display:flex;gap:10px;margin-bottom:10px;font-size:13px;color:#55565c}
+.step .d{flex:none;min-width:58px;text-align:center;font-size:12px;font-weight:700;padding:4px 6px;border-radius:8px;background:var(--lav);color:#5b3df5;height:fit-content}
+.step b{color:var(--ink)}
+.chk{display:flex;gap:8px;font-size:13px;padding:5px 0;color:#55565c;align-items:flex-start}
+.chk input{margin-top:3px}
+
+/* forms */
+label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--mut)}
+input,select,textarea{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 10px;width:100%;outline:none;font-size:14px}
+input:focus,select:focus,textarea:focus{border-color:#b9b8b1}
+input[type=color]{padding:2px;height:36px;cursor:pointer}
+input[type=checkbox]{width:auto}
+.inline{display:flex;gap:8px;margin-bottom:8px}
+.platforms{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.plat{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:99px;padding:3px 8px 3px 4px;background:#fff}
+.plat input[type=color]{width:24px;height:24px;border-radius:50%;border:0;padding:0}
+.todo{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--line)}
+.todo span{flex:1}
+.todo.done span{text-decoration:line-through;color:var(--mut)}
+.ins{display:grid;grid-template-columns:84px 1fr 86px;gap:8px;align-items:center;font-size:12.5px;margin-bottom:8px}
+.ins .tr{height:12px;background:#ebeae6;border-radius:99px;overflow:hidden}
+.ins .tr i{display:block;height:100%;border-radius:99px;background:var(--c,var(--purple))}
+.ins span:last-child{color:var(--mut);text-align:right}
+
+/* modal */
+dialog{border:0;border-radius:22px;padding:22px;width:min(660px,94vw);box-shadow:0 30px 80px rgba(0,0,0,.25);background:var(--shell);color:var(--ink)}
+dialog::backdrop{background:rgba(20,20,20,.35)}
+.fg{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.fg .full{grid-column:1/-1}
+.mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.mh h2{margin:0;font-size:18px}
+.mf{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;align-items:center}
+.mf .sp{margin-left:auto}
+.log{font-size:12px;color:var(--mut);max-height:110px;overflow:auto;margin-top:10px;border-top:1px solid var(--line);padding-top:8px}
+
+@media (max-width:900px){
+  body{padding:8px}
+  .shell{grid-template-columns:1fr;border-radius:20px}
+  .side{flex-direction:row;flex-wrap:wrap;border-right:0;border-bottom:1px solid var(--line);padding:12px;align-items:center}
+  .navlabel,.sidefoot,.brand span{display:none}
+  .brand{padding:0 6px 0 0}
+  .main{padding:16px}
+  .search input{width:150px}
+  .fg{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<nav class="side">
+  <div class="brand"><div class="logo">O</div><span><b>Outreach HQ</b></span></div>
+  <div class="navlabel">Workspace</div>
+  <button class="nv on" data-page="overview"><span data-ic="home"></span>Overview</button>
+  <button class="nv" data-page="pipeline"><span data-ic="board"></span>Pipeline<span class="nb" id="dueBadge"></span></button>
+  <button class="nv" data-page="schedule"><span data-ic="calendar"></span>Schedule</button>
+  <div class="navlabel">Learn</div>
+  <button class="nv" data-page="playbook"><span data-ic="book"></span>Playbook</button>
+  <div class="navlabel">System</div>
+  <button class="nv" data-page="settings"><span data-ic="sliders"></span>Settings</button>
+  <div class="sidefoot">
+    <div class="t"><span id="clockTime">--:--:--</span><span class="ist">IST</span></div>
+    <div class="d" id="clockDate"></div>
+    <span class="slot fair" id="slotPill">Checking...</span>
+    <div class="slotnext" id="slotNext"></div>
+  </div>
+</nav>
+
+<section class="main">
+  <header class="top">
+    <h1 id="pageTitle">Overview</h1>
+    <div class="tools">
+      <div class="search"><input id="search" placeholder="Search leads"><kbd>/</kbd></div>
+      <button class="ib" id="bellBtn" title="Enable reminders" data-ic="bell"></button>
+      <button class="btn dark" id="newBtn">+ New lead</button>
+    </div>
+  </header>
+
+  <!-- OVERVIEW -->
+  <div class="page on" id="p-overview">
+    <div class="greet"><h2 id="greet">Hello!</h2><p id="greetSub"></p></div>
+    <div class="card strip" id="strip" style="margin-bottom:16px"></div>
+    <div class="tiles" id="tiles" style="margin-bottom:16px"></div>
+    <div class="qtiles" id="qtiles" style="margin-bottom:16px"></div>
+    <div class="grid2" style="margin-bottom:16px">
+      <section class="card"><div class="hd"><h2>Follow up today</h2><span class="small mut" id="focusCount"></span></div><div id="focus"></div></section>
+      <section class="card">
+        <div class="hd"><h2>To-dos</h2></div>
+        <div class="inline"><input id="todoText" placeholder="e.g. Send portfolio to Ravi"><button class="btn dark" id="todoAdd">Add</button></div>
+        <div id="todos"></div>
+      </section>
+    </div>
+    <div class="grid2">
+      <section class="card"><div class="hd"><h2>Which time slot gets replies?</h2></div><p class="small mut" style="margin-top:-6px">By when you first contacted the lead. n = number of leads.</p><div id="slotChart"></div></section>
+      <section class="card"><div class="hd"><h2>Which platform works best?</h2></div><p class="small mut" style="margin-top:-6px">Reply rate counts Replied, Meeting and Won.</p><div id="platChart"></div></section>
+    </div>
+  </div>
+
+  <!-- PIPELINE -->
+  <div class="page" id="p-pipeline">
+    <div class="chips" id="chips1"></div>
+    <div class="chips" id="chips2"></div>
+    <div class="board" id="board"></div>
+  </div>
+
+  <!-- SCHEDULE -->
+  <div class="page" id="p-schedule">
+    <div class="grid2" style="grid-template-columns:minmax(300px,380px) 1fr">
+      <div class="stack">
+        <section class="card cal">
+          <div class="hd">
+            <div class="mn"><button class="ib" id="calPrev" style="width:30px;height:30px">‹</button><span id="calTitle"></span><button class="ib" id="calNext" style="width:30px;height:30px">›</button></div>
+            <button class="btn sm" id="calToday">Today</button>
+          </div>
+          <div class="cgrid" id="cal"></div>
+        </section>
+        <section class="card"><div class="hd"><h2 id="dayTitle">Selected day</h2></div><div id="dayList"></div></section>
+      </div>
+      <div>
+        <div class="hd" style="display:flex;justify-content:space-between;margin-bottom:10px"><b>Upcoming follow-ups</b><span class="small mut">Click a card to open the lead</span></div>
+        <div class="upc" id="upc"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLAYBOOK -->
+  <div class="page" id="p-playbook">
+    <div class="chips" id="pbTabs">
+      <button class="chip on" data-tab="tips">Tips</button>
+      <button class="chip" data-tab="scripts">Scripts</button>
+      <button class="chip" data-tab="plan">Plan</button>
+    </div>
+    <div id="tab-tips" class="grid2">
+      <section class="card"><div class="hd"><h2>Tips that help more than timing</h2></div><div id="tipList"></div></section>
+      <section class="card"><div class="hd"><h2>Best call times (IST)</h2></div>
+        <table class="times">
+          <tr><td><span class="dot" style="background:#3bb44a"></span> Best</td><td>Tue to Thu, 11 AM to 1 PM and 3 to 5 PM</td></tr>
+          <tr><td><span class="dot" style="background:#4fcfae"></span> Good</td><td>Mon and Fri in the same slots</td></tr>
+          <tr><td><span class="dot" style="background:var(--yellow)"></span> Fair</td><td>10:30 to 11 AM, 2:30 to 3 PM, 5 to 6:30 PM</td></tr>
+          <tr><td><span class="dot" style="background:var(--red)"></span> Avoid</td><td>Before 10:30 AM, lunch 1 to 2:30 PM, after 6:30 PM, Sundays</td></tr>
+          <tr><td>Small shops</td><td>3 to 5 PM, or WhatsApp first and ask when to call</td></tr>
+          <tr><td>US clients</td><td>7 to 9 PM IST (about 9:30 AM to noon Eastern)</td></tr>
+        </table>
+      </section>
+    </div>
+    <div id="tab-scripts" style="display:none">
+      <div class="grid2">
+        <section class="card">
+          <div class="hd"><h2>Message templates</h2></div>
+          <div class="inline">
+            <label style="flex:1">Client name<input id="tplName" placeholder="e.g. Ravi"></label>
+            <label style="flex:1">Your name<input id="tplMe" placeholder="Your name"></label>
+          </div>
+          <p class="small mut">Type the names once and every template fills in. Replace anything in [square brackets] before sending.</p>
+          <div id="tplList"></div>
+        </section>
+        <div class="stack">
+          <section class="card"><div class="hd"><h2>Call script (under 2 minutes)</h2></div><div class="tpl"><pre id="callScript"></pre><button class="btn sm" id="copyCall">Copy</button></div></section>
+          <section class="card"><div class="hd"><h2>If they say...</h2></div><div id="objList"></div></section>
+        </div>
+      </div>
+    </div>
+    <div id="tab-plan" style="display:none">
+      <div class="grid2">
+        <section class="card"><div class="hd"><h2>7-step follow-up plan</h2></div><div id="cadence"></div></section>
+        <div class="stack">
+          <section class="card"><div class="hd"><h2>Before you reach out</h2></div><div id="checklist"></div></section>
+          <section class="card"><div class="hd"><h2>Do and don't</h2></div>
+            <div class="q"><b style="color:var(--greenink)">Do</b>Keep messages under 60 words. Mention one real detail. Ask one small question. Send your link after they reply or after the call.</div>
+            <div class="q"><b style="color:var(--red)">Don't</b>Send long paragraphs, big attachments, or the same copy-paste text to everyone. Don't say "dear sir" and don't beg for work.</div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div class="page" id="p-settings">
+    <div class="grid2">
+      <section class="card">
+        <div class="hd"><h2>You</h2></div>
+        <div class="inline">
+          <label style="flex:2">Your name<input id="setName" placeholder="Your name"></label>
+          <label style="flex:1">Daily contact goal<input type="number" id="goalIn" min="1" max="200"></label>
+        </div>
+      </section>
+      <section class="card">
+        <div class="hd"><h2>Platforms and colors</h2></div>
+        <div class="platforms" id="platforms"></div>
+        <div class="inline">
+          <input id="newPlat" placeholder="Add platform (e.g. Telegram)">
+          <input type="color" id="newPlatColor" value="#0ea5e9" style="width:54px">
+          <button class="btn" id="platAdd">Add</button>
+        </div>
+      </section>
+      <section class="card">
+        <div class="hd"><h2>Reminders and data</h2></div>
+        <div class="inline" style="flex-wrap:wrap">
+          <button class="btn" id="notifBtn">Enable browser reminders</button>
+          <button class="btn" id="csvBtn">Export CSV</button>
+          <button class="btn" id="jsonBtn">Backup (JSON)</button>
+          <button class="btn" id="importBtn">Restore backup</button>
+          <input type="file" id="importFile" accept="application/json" style="display:none">
+        </div>
+        <p class="small mut">Reminders only pop up while this page is open in a tab. Your data is stored in this browser, so back it up now and then.</p>
+      </section>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- LEAD MODAL -->
+<dialog id="leadDlg">
+  <form id="leadForm" method="dialog">
+    <div class="mh"><h2 id="m_title">New lead</h2><button type="button" class="ib" id="m_x" style="width:32px;height:32px">✕</button></div>
+    <div class="fg">
+      <label class="full">Name or business<input id="m_name" required placeholder="e.g. Ravi Traders"></label>
+      <label>Phone, email or @handle<input id="m_contact" placeholder="9876543210"></label>
+      <label>Platform<select id="m_platform"></select></label>
+      <label>Service<select id="m_service"><option>Website</option><option>UI/UX design</option><option>Website + UI/UX</option><option>App design</option><option>Other</option></select></label>
+      <label>Status<select id="m_status"></select></label>
+      <label>Contacted on<input type="datetime-local" id="m_contacted" required></label>
+      <label>Follow up on<input type="date" id="m_follow"></label>
+      <label>Next action<input id="m_next" placeholder="Send portfolio"></label>
+      <label>Deal value (₹)<input type="number" id="m_value" min="0" placeholder="25000"></label>
+      <label class="full">Notes<textarea id="m_notes" rows="2" placeholder="Site is slow on mobile"></textarea></label>
+    </div>
+    <div class="mf">
+      <button class="btn dark" type="submit" id="m_save">Save</button>
+      <button class="btn green" type="button" id="m_done">Followed up</button>
+      <span id="m_links" style="display:flex;gap:6px"></span>
+      <button class="btn red sp" type="button" id="m_del">Delete</button>
+    </div>
+    <div class="log" id="m_log"></div>
+  </form>
+</dialog>
+
+<script>
+(function(){
+  "use strict";
+  var KEY="outreach-dashboard-v1";
+  var STATUSES=["Messaged","Called","Replied","Meeting","Won","Lost"];
+  var REPLIED=["Replied","Meeting","Won"];
+  var TITLES={overview:"Overview",pipeline:"Pipeline",schedule:"Schedule",playbook:"Playbook",settings:"Settings"};
+
+  var DEFAULT={
+    clients:[],
+    todos:[
+      {id:"d1",text:"Prepare 3 portfolio case studies (problem, design, result)",done:false},
+      {id:"d2",text:"Set up a WhatsApp Business profile with your photo and portfolio link",done:false},
+      {id:"d3",text:"Make a list of 20 local businesses with weak websites",done:false},
+      {id:"d4",text:"Record a 30 second intro video you can send",done:false}
+    ],
+    platforms:[
+      {name:"WhatsApp",color:"#22a755"},{name:"Instagram",color:"#e1306c"},{name:"Email",color:"#3b82f6"},
+      {name:"Phone call",color:"#e8903b"},{name:"LinkedIn",color:"#0a66c2"}
+    ],
+    settings:{goal:10,theme:"dark",view:"cards",myName:"",check:{}}
+  };
+
+  var ICONS={
+    home:"M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z M9 22V12h6v10",
+    board:"M3 3h6v18H3z M15 3h6v10h-6z",
+    calendar:"M3 4h18v18H3z M16 2v4 M8 2v4 M3 10h18",
+    book:"M4 19.5A2.5 2.5 0 0 1 6.5 17H20 M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z",
+    sliders:"M4 21v-7 M4 10V3 M12 21v-9 M12 8V3 M20 21v-5 M20 12V3 M1 14h6 M9 8h6 M17 16h6",
+    bell:"M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9 M13.73 21a2 2 0 0 1-3.46 0",
+    clock:"M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z M12 6v6l4 2",
+    users:"M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2 M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z M23 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75",
+    trend:"M23 6l-9.5 9.5-5-5L1 18 M17 6h6v6",
+    check:"M20 6L9 17l-5-5",
+    msg:"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
+    phone:"M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z",
+    star:"M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z",
+    video:"M23 7l-7 5 7 5V7z M1 5h15v14H1z",
+    chev:"M9 18l6-6-6-6"
+  };
+  function ic(n,s){ return '<svg width="'+(s||18)+'" height="'+(s||18)+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="'+ICONS[n]+'"/></svg>'; }
+
+  var TIPS=[
+    {core:1,t:"Don't start with a call",d:"Send a short WhatsApp or email first, then follow up with a call 1 or 2 days later. Cold calls are often ignored."},
+    {core:1,t:"Keep the first call under 2 minutes",d:"Introduce yourself, say one thing you noticed about their website or app, and ask if you can send a quick idea."},
+    {core:1,t:"Send your portfolio link right after the call",d:"Send it within 5 minutes while they still remember you. Share 2 or 3 relevant projects, not everything."},
+    {core:1,t:"Follow up 3 or 4 times",d:"Most clients say yes after the second or third contact, not the first. Space the follow-ups 2 to 4 days apart."},
+    {core:1,t:"Track your results for 2 weeks",d:"Note which time slots get the most replies, then adjust to match. The charts on the Overview page do this for you."},
+    {t:"Research for 2 minutes first",d:"Open their site or app on your phone. Find one real problem: slow loading, hard to read, no WhatsApp button, outdated look."},
+    {t:"Lead with their problem, not your skills",d:"Say \"your site is slow on mobile\" instead of \"I am a designer with 3 years of experience\"."},
+    {t:"Make a small, specific ask",d:"Ask for a 10 minute chat or permission to send an idea. Do not ask \"do you need a website?\"."},
+    {t:"Offer a mini free audit",d:"A list of 3 quick fixes or one redesigned screen shows your skill and starts the conversation."},
+    {t:"Talk to the decision maker",d:"Owner, founder or marketing head. If unsure, politely ask who looks after the website."},
+    {t:"Write a note after every call",d:"What they said, what they care about, the next step. Use the notes and next action fields on each lead."},
+    {t:"Know when to pause",d:"After 4 tries with no reply, pause for 30 days and come back with something new. This dashboard does it for you."}
+  ];
+  var TEMPLATES=[
+    {title:"First WhatsApp message",tag:"Day 0",text:"Hi [Name], this is [Your name], a UI/UX and website designer. I was checking out [Business] and noticed [one specific thing, e.g. the site loads slowly on mobile]. I made a quick idea to fix it. Can I send it over?"},
+    {title:"First email",tag:"Day 0",text:"Subject: Quick idea for [Business]'s website\n\nHi [Name],\n\nI'm [Your name], a UI/UX and website designer. While looking at [Business], I noticed [one specific thing]. I put together a short idea to improve it and would be happy to share it, no cost.\n\nWould it be okay if I send it over?\n\nThanks,\n[Your name]"},
+    {title:"Instagram DM",tag:"Day 0",text:"Hi [Name]! Love what you're doing with [Business]. I design websites and apps, and I had a quick idea to make your page bring in more enquiries. Want me to send it here?"},
+    {title:"Follow-up message 1",tag:"Day 2",text:"Hi [Name], just checking if you saw my message about [Business]. I can send the idea in one message, no pressure. When is a good time for a quick 2 minute call?"},
+    {title:"Right after the call",tag:"Same day",text:"Hi [Name], thanks for taking my call! As promised, here is my portfolio: [portfolio link]. The project closest to your business is [project name]. Happy to share the idea for [Business] whenever you're ready."},
+    {title:"Follow-up message 2 (add value)",tag:"Day 5",text:"Hi [Name], I made a small sketch of how [Business]'s homepage could look: [link or screenshot]. It focuses on [benefit, e.g. getting more enquiries from mobile]. Would love your thoughts."},
+    {title:"Last follow-up",tag:"Day 9",text:"Hi [Name], I don't want to keep bothering you, so this will be my last message. If a website or design refresh is ever on your list, my portfolio is here: [portfolio link]. Wishing [Business] a great season!"}
+  ];
+  var CALL_SCRIPT="Hi [Name], this is [Your name]. Is this a good moment for 2 minutes?\n\nI design websites and apps. I was looking at [Business] and noticed [one specific thing].\n\nI have a quick idea that could help with that. Can I send it to you on WhatsApp right after this call?\n\n(If yes) Great, I'll send it in 5 minutes along with my portfolio. Is it okay if I check in on [day] to hear your thoughts?\n\n(If busy) No problem, what time works better for a short call?";
+  var OBJ=[
+    {q:"\"Send me the details on WhatsApp.\"",a:"Sure, I'll send two relevant projects and a quick idea in 5 minutes. Can I call you on [day] for 10 minutes to hear what you think?"},
+    {q:"\"We already have a designer or agency.\"",a:"That's great, I'm not asking you to switch. I can do a quick review of your site and send 3 ideas for free. Would that be okay?"},
+    {q:"\"What's the cost?\"",a:"It depends on the pages and features. After a 10 minute chat I can give you a fixed quote. When can we do that?"},
+    {q:"\"Call me later.\"",a:"Of course. What day and time suits you? Then set the follow-up date on the lead right away."},
+    {q:"\"Not interested.\"",a:"No problem, thanks for your time. I'll leave my portfolio link with you in case you need it later. Then stop and mark the lead as Lost."}
+  ];
+  var CADENCE=[
+    {d:"Day 0",t:"<b>Research and first message.</b> Spend 2 minutes on their site, then send the short WhatsApp, email or DM."},
+    {d:"Day 2",t:"<b>Call under 2 minutes.</b> Use the call script. Send the portfolio link straight after."},
+    {d:"Day 2",t:"<b>Log it.</b> Add notes and a next action on the lead."},
+    {d:"Day 5",t:"<b>Add value.</b> Send a small sketch, screenshot or 3 quick fixes."},
+    {d:"Day 7",t:"<b>Try a different channel.</b> If WhatsApp had no reply, try email or Instagram."},
+    {d:"Day 9",t:"<b>Last polite follow-up.</b> Short and friendly."},
+    {d:"Day 39",t:"<b>Revisit.</b> The dashboard sets this 30 day pause for you after the 4th touch."}
+  ];
+  var CHECK=["Portfolio link works on mobile","3 case studies ready (problem, design, result)","WhatsApp Business profile set up","A one-line intro about yourself practiced","Lead list with phone numbers and websites","Rough price range decided for website and UI/UX work"];
+
+  /* ---------- state ---------- */
+  var state=load();
+  function load(){
+    var s=null;
+    try{ var raw=localStorage.getItem(KEY); if(raw) s=JSON.parse(raw); }catch(e){}
+    if(!s||!Array.isArray(s.clients)||!Array.isArray(s.todos)||!Array.isArray(s.platforms)) s=JSON.parse(JSON.stringify(DEFAULT));
+    return normalize(s);
+  }
+  function normalize(s){
+    s.settings=Object.assign({},DEFAULT.settings,s.settings||{});
+    if(!s.settings.check) s.settings.check={};
+    s.clients.forEach(function(c){
+      if(!Array.isArray(c.log)) c.log=[];
+      if(c.contact==null) c.contact="";
+      if(!c.service) c.service="Website";
+      if(c.next==null) c.next="";
+      c.value=Number(c.value)||0; c.count=Number(c.count)||1;
+      if(c.notes==null) c.notes="";
+    });
+    return s;
+  }
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){} }
+
+  /* ---------- helpers ---------- */
+  function $(id){ return document.getElementById(id); }
+  function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+  function pad(n){ return (n<10?"0":"")+n; }
+  function ymd(d){ return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
+  function nowLocalInput(){ var d=new Date(); return ymd(d)+"T"+pad(d.getHours())+":"+pad(d.getMinutes()); }
+  function addDays(n){ var d=new Date(); d.setDate(d.getDate()+n); return ymd(d); }
+  function dayDiff(a,b){ return Math.round((new Date(b+"T00:00:00")-new Date(a+"T00:00:00"))/864e5); }
+  function today(){ return ymd(new Date()); }
+  function el(tag,cls,text){ var e=document.createElement(tag); if(cls) e.className=cls; if(text!==undefined) e.textContent=text; return e; }
+  function money(n){ return "₹"+Number(n||0).toLocaleString("en-IN"); }
+  function platColor(name){ for(var i=0;i<state.platforms.length;i++) if(state.platforms[i].name===name) return state.platforms[i].color; return "#8b8c93"; }
+  function fmtDT(s){ if(!s) return ""; var d=new Date(s); if(isNaN(d)) return s; return d.toLocaleString("en-IN",{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}); }
+  function closed(c){ return c.status==="Won"||c.status==="Lost"; }
+  function followState(c){
+    if(!c.follow||closed(c)) return "";
+    var t=today(); return c.follow<t?"overdue":(c.follow===t?"today":"");
+  }
+  function addLog(c,kind,text,t){ c.log.push({t:t||nowLocalInput(),kind:kind,text:text}); }
+  function firstContact(c){ for(var i=0;i<c.log.length;i++) if(c.log[i].kind==="contact") return c.log[i].t; return c.contacted; }
+  function copyText(txt,btn){
+    function done(){ var o=btn.textContent; btn.textContent="Copied!"; setTimeout(function(){btn.textContent=o;},1200); }
+    function fb(){ var ta=document.createElement("textarea"); ta.value=txt; document.body.appendChild(ta); ta.select(); try{ document.execCommand("copy"); done(); }catch(e){} document.body.removeChild(ta); }
+    if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done,fb); else fb();
+  }
+  function contactLinks(c){
+    var out=[],v=(c.contact||"").trim(); if(!v) return out;
+    if(v.indexOf("@")>0&&v.indexOf(" ")===-1&&v.charAt(0)!=="@"){ out.push({label:"Email",href:"mailto:"+v}); return out; }
+    var digits=v.replace(/\D/g,"");
+    if(digits.length>=10){ var num=digits.length===10?"91"+digits:digits; out.push({label:"WhatsApp",href:"https://wa.me/"+num}); out.push({label:"Call",href:"tel:+"+num}); return out; }
+    if(/instagram/i.test(c.platform)&&/^@?[\w.]+$/.test(v)) out.push({label:"Instagram",href:"https://instagram.com/"+v.replace("@","")});
+    return out;
+  }
+  function linkEls(c){
+    return contactLinks(c).map(function(l){ var a=el("a","lnk",l.label); a.href=l.href; a.target="_blank"; a.rel="noopener noreferrer"; return a; });
+  }
+  function avatar(c){
+    var col=platColor(c.platform), a=el("div","av",(c.name||"?").trim().charAt(0).toUpperCase());
+    a.style.color=col; a.style.background=/^#[0-9a-f]{6}$/i.test(col)?col+"22":"#eee"; return a;
+  }
+  function timeBadge(c){
+    if(!c.follow||closed(c)) return null;
+    var d=dayDiff(today(),c.follow), b=el("span","tb");
+    if(d<0){ b.className="tb late"; b.textContent=(-d)+"d late"; }
+    else if(d===0){ b.className="tb today"; b.textContent="Today"; }
+    else { b.textContent="in "+d+"d"; }
+    return b;
+  }
+  function fmtD(s){ var d=new Date(s+"T00:00:00"); return isNaN(d)?s:d.toLocaleDateString("en-IN",{weekday:"short",day:"numeric",month:"short"}); }
+
+  /* ---------- IST clock ---------- */
+  var fmtTime=new Intl.DateTimeFormat("en-IN",{timeZone:"Asia/Kolkata",hour:"numeric",minute:"2-digit",second:"2-digit",hour12:true});
+  var fmtDate=new Intl.DateTimeFormat("en-IN",{timeZone:"Asia/Kolkata",weekday:"short",day:"numeric",month:"short",year:"numeric"});
+  var fmtNext=new Intl.DateTimeFormat("en-IN",{timeZone:"Asia/Kolkata",weekday:"short",hour:"numeric",minute:"2-digit",hour12:true});
+  var fmtParts=new Intl.DateTimeFormat("en-US",{timeZone:"Asia/Kolkata",weekday:"short",hour:"2-digit",minute:"2-digit",hourCycle:"h23"});
+  var DOW={Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6};
+  function istInfo(d){ var o={}; fmtParts.formatToParts(d).forEach(function(x){o[x.type]=x.value;}); return {dow:DOW[o.weekday],mins:(parseInt(o.hour,10)%24)*60+parseInt(o.minute,10)}; }
+  function slotStatus(i){
+    var d=i.dow,m=i.mins;
+    if(d===0) return {k:"avoid",t:"Sunday: avoid calling"};
+    if(m<630||m>=1110) return {k:"avoid",t:"Avoid: after hours"};
+    if(m>=780&&m<870) return {k:"avoid",t:"Avoid: lunch time"};
+    if((m>=660&&m<780)||(m>=900&&m<1020)){
+      if(d>=2&&d<=4) return {k:"prime",t:"Prime time to call"};
+      if(d===6) return {k:"good",t:"Okay, Saturdays are slow"};
+      return {k:"good",t:"Good time to call"};
+    }
+    return {k:"fair",t:"Fair time to call"};
+  }
+  function nextPrime(){
+    var step=15*60000,start=Math.ceil(Date.now()/step)*step;
+    for(var i=0;i<7*96;i++){ var t=new Date(start+i*step); if(slotStatus(istInfo(t)).k==="prime") return t; }
+    return null;
+  }
+  var lastMinute=-1;
+  function tick(){
+    var now=new Date();
+    $("clockTime").textContent=fmtTime.format(now).toUpperCase();
+    $("clockDate").textContent=fmtDate.format(now);
+    var min=Math.floor(now.getTime()/60000); if(min===lastMinute) return; lastMinute=min;
+    var st=slotStatus(istInfo(now)), p=$("slotPill"); p.textContent=st.t; p.className="slot "+st.k;
+    if(st.k==="prime") $("slotNext").textContent="Great moment to make calls.";
+    else { var n=nextPrime(); if(n){ var diff=Math.round((n.getTime()-now.getTime())/60000),h=Math.floor(diff/60),m=diff%60; $("slotNext").textContent="Next prime: "+fmtNext.format(n).toUpperCase()+" (in "+(h?h+"h ":"")+m+"m)"; } }
+    var hr=istInfo(now).mins/60;
+    $("greet").textContent=(hr<12?"Good morning":hr<17?"Good afternoon":"Good evening")+(state.settings.myName?", "+state.settings.myName:"")+" 👋";
+  }
+
+  /* ---------- navigation ---------- */
+  var page="overview";
+  var filt={chip:"all",plat:"",status:"",q:""};
+  var cal={y:new Date().getFullYear(),m:new Date().getMonth(),sel:today()};
+
+  function go(p){
+    page=p;
+    Array.prototype.forEach.call(document.querySelectorAll(".page"),function(x){ x.classList.toggle("on",x.id==="p-"+p); });
+    Array.prototype.forEach.call(document.querySelectorAll(".nv"),function(x){ x.classList.toggle("on",x.getAttribute("data-page")===p); });
+    $("pageTitle").textContent=TITLES[p];
+    render();
+  }
+  Array.prototype.forEach.call(document.querySelectorAll(".nv"),function(b){ b.addEventListener("click",function(){ go(b.getAttribute("data-page")); }); });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-ic]"),function(s){ s.innerHTML=ic(s.getAttribute("data-ic"),s.tagName==="BUTTON"?18:18); });
+
+  $("search").addEventListener("input",function(){ filt.q=$("search").value.trim().toLowerCase(); if(page!=="pipeline") go("pipeline"); else renderPipeline(); });
+  document.addEventListener("keydown",function(e){
+    var tg=(e.target.tagName||"").toLowerCase(); if(tg==="input"||tg==="textarea"||tg==="select"||$("leadDlg").open) return;
+    if(e.key==="/"){ e.preventDefault(); $("search").focus(); }
+    if(e.key==="n"){ e.preventDefault(); openLead(null); }
+  });
+
+  /* ---------- overview ---------- */
+  function contactsToday(){
+    var t=today(),n=0; state.clients.forEach(function(c){ c.log.forEach(function(l){ if(l.kind==="contact"&&(l.t||"").slice(0,10)===t) n++; }); }); return n;
+  }
+  function renderOverview(){
+    var total=state.clients.length;
+    var replied=state.clients.filter(function(c){return REPLIED.indexOf(c.status)>-1;}).length;
+    var won=state.clients.filter(function(c){return c.status==="Won";});
+    var due=state.clients.filter(function(c){return followState(c);}).length;
+    var active=state.clients.filter(function(c){return !closed(c);});
+    var pipe=active.reduce(function(a,c){return a+c.value;},0);
+    var wonVal=won.reduce(function(a,c){return a+c.value;},0);
+    var ct=contactsToday(), goal=Number(state.settings.goal)||10;
+
+    $("greetSub").textContent= due? "You have "+due+" follow-up"+(due>1?"s":"")+" waiting. Let's clear them." : (total?"You're all caught up. Time to find new leads.":"Add your first lead to get started.");
+
+    var strip=$("strip"); strip.innerHTML="";
+    [
+      {i:"users",l:"Leads contacted",v:total+(total===1?" lead":" leads"),b:"+"+ct+" today",c:"g"},
+      {i:"clock",l:"Follow-ups due",v:String(due),b:due?"breach":"On target",c:due?"r":"g"},
+      {i:"trend",l:"Reply rate",v:(total?Math.round(replied/total*100):0)+"%",b:replied+" replied",c:"n"},
+      {i:"star",l:"In pipeline",v:money(pipe),b:"Won "+money(wonVal),c:"g"}
+    ].forEach(function(x){
+      var d=el("div","st"), ico=el("div","sti"); ico.innerHTML=ic(x.i,18);
+      var t=el("div","stx"); t.appendChild(el("div","l",x.l)); t.appendChild(el("div","v",x.v));
+      d.appendChild(ico); d.appendChild(t); d.appendChild(el("span","bdg "+x.c,x.b)); strip.appendChild(d);
+    });
+
+    var tiles=$("tiles"); tiles.innerHTML="";
+    function tile(color,icon,title,link,label,val,pct,barColor){
+      var t=el("div","tile"), h=el("div","h"), i=el("span","ico"); i.style.background=color; i.innerHTML=ic(icon,13);
+      h.appendChild(i); h.appendChild(el("span","",title));
+      if(link){ var a=el("a","",link.t); a.addEventListener("click",link.f); h.appendChild(a); }
+      var r=el("div","r"); r.appendChild(el("span","",label)); r.appendChild(el("span","",val));
+      var b=el("div","pbar"), f=document.createElement("i"); f.style.width=Math.min(100,pct)+"%"; f.style.background=barColor; b.appendChild(f);
+      t.appendChild(h); t.appendChild(r); t.appendChild(b); tiles.appendChild(t);
+    }
+    tile("#f4c542","star","Today's goal",{t:"Change goal",f:function(){go("settings");}},"Contacts today",ct+" / "+goal,Math.round(ct/goal*100),"#f4c542");
+    tile("#7c5cff","clock","Follow-ups",{t:"Open schedule",f:function(){go("schedule");}},"On schedule",(active.length-due)+" / "+active.length,active.length?Math.round((active.length-due)/active.length*100):100,"#7c5cff");
+    tile("#4fcfae","check","Won deals",{t:"Open pipeline",f:function(){go("pipeline");}},"Won",won.length+" / "+total,total?Math.round(won.length/total*100):0,"#4fcfae");
+
+    var q=$("qtiles"); q.innerHTML="";
+    [["Messaged","msg","var(--lav)"],["Called","phone","var(--peach)"],["Replied","star","var(--cream)"],["Meeting","video","var(--mint)"]].forEach(function(x){
+      var n=state.clients.filter(function(c){return c.status===x[0];}).length;
+      var b=el("button","qt"); b.style.background=x[2];
+      var bx=el("span","bx"); bx.innerHTML=ic(x[1],18);
+      var t=el("span"); t.appendChild(el("b","",String(n))); t.appendChild(el("span","",x[0]));
+      var ch=el("span","ch"); ch.innerHTML=ic("chev",16);
+      b.appendChild(bx); b.appendChild(t); b.appendChild(ch);
+      b.addEventListener("click",function(){ filt.status=x[0]; filt.chip="all"; go("pipeline"); });
+      q.appendChild(b);
+    });
+
+    renderFocus(); renderTodos(); renderCharts();
+  }
+  function renderFocus(){
+    var due=state.clients.filter(function(c){return followState(c);}).sort(function(a,b){return a.follow.localeCompare(b.follow);});
+    $("focusCount").textContent=due.length?due.length+" due":"";
+    var box=$("focus"); box.innerHTML="";
+    if(!due.length){ box.appendChild(el("div","empty","Nothing due. Add new leads to hit your goal.")); return; }
+    due.slice(0,7).forEach(function(c){
+      var r=el("div","row"); r.appendChild(avatar(c));
+      var nm=el("div","nm"); nm.style.cursor="pointer"; nm.appendChild(el("b","",c.name)); nm.appendChild(el("span","small mut",c.platform+(c.next?" · "+c.next:"")));
+      nm.addEventListener("click",function(){ openLead(c.id); });
+      r.appendChild(nm); var tb=timeBadge(c); if(tb) r.appendChild(tb);
+      linkEls(c).slice(0,1).forEach(function(a){ r.appendChild(a); });
+      var b=el("button","btn sm green","Done"); b.title="Mark followed up"; b.addEventListener("click",function(){ doFollowUp(c); });
+      r.appendChild(b); box.appendChild(r);
+    });
+    if(due.length>7) box.appendChild(el("div","small mut","+"+(due.length-7)+" more in the pipeline"));
+  }
+  function renderTodos(){
+    var box=$("todos"); box.innerHTML="";
+    if(!state.todos.length){ box.appendChild(el("div","empty","No to-dos yet.")); return; }
+    state.todos.forEach(function(t){
+      var row=el("div","todo"+(t.done?" done":"")), cb=document.createElement("input"); cb.type="checkbox"; cb.checked=t.done;
+      cb.addEventListener("change",function(){ t.done=cb.checked; save(); renderTodos(); });
+      var x=el("button","btn sm","x"); x.addEventListener("click",function(){ state.todos=state.todos.filter(function(a){return a.id!==t.id;}); save(); renderTodos(); });
+      row.appendChild(cb); row.appendChild(el("span","",t.text)); row.appendChild(x); box.appendChild(row);
+    });
+  }
+  function addTodo(){ var v=$("todoText").value.trim(); if(!v) return; state.todos.push({id:uid(),text:v,done:false}); $("todoText").value=""; save(); renderTodos(); }
+  $("todoAdd").addEventListener("click",addTodo);
+  $("todoText").addEventListener("keydown",function(e){ if(e.key==="Enter") addTodo(); });
+
+  function slotName(t){
+    var d=new Date(t); if(isNaN(d)) return null; var m=d.getHours()*60+d.getMinutes();
+    return m<660?"Before 11":m<780?"11 to 1":m<900?"1 to 3":m<1020?"3 to 5":m<1140?"5 to 7":"After 7";
+  }
+  function barRow(label,tot,rep,color){
+    var r=el("div","ins"); r.appendChild(el("span","",label));
+    var tr=el("div","tr"),i=document.createElement("i"); i.style.width=(tot?Math.round(rep/tot*100):0)+"%"; if(color) i.style.setProperty("--c",color);
+    tr.appendChild(i); r.appendChild(tr); r.appendChild(el("span","",tot?Math.round(rep/tot*100)+"% (n="+tot+")":"no data")); return r;
+  }
+  function renderCharts(){
+    var slots=["Before 11","11 to 1","1 to 3","3 to 5","5 to 7","After 7"],sc=$("slotChart"),pc=$("platChart"); sc.innerHTML=""; pc.innerHTML="";
+    if(!state.clients.length){ sc.appendChild(el("div","empty","Add a few leads to see results.")); pc.appendChild(el("div","empty","Add a few leads to see results.")); return; }
+    var tot={},rep={}; slots.forEach(function(s){tot[s]=0;rep[s]=0;});
+    state.clients.forEach(function(c){ var s=slotName(firstContact(c)); if(!s) return; tot[s]++; if(REPLIED.indexOf(c.status)>-1) rep[s]++; });
+    slots.forEach(function(s){ sc.appendChild(barRow(s,tot[s],rep[s])); });
+    state.platforms.forEach(function(p){
+      var l=state.clients.filter(function(c){return c.platform===p.name;});
+      pc.appendChild(barRow(p.name,l.length,l.filter(function(c){return REPLIED.indexOf(c.status)>-1;}).length,p.color));
+    });
+  }
+
+  /* ---------- actions ---------- */
+  function doFollowUp(c){
+    c.count++; c.contacted=nowLocalInput(); addLog(c,"contact","Touch "+c.count+" via "+c.platform);
+    if(c.count>=4&&(c.status==="Messaged"||c.status==="Called")){ c.follow=addDays(30); addLog(c,"note","4 touches, no reply. Paused for 30 days."); }
+    else c.follow=addDays(2);
+    save(); render();
+  }
+  function setStatus(c,s){ if(c.status===s) return; c.status=s; addLog(c,"status","Status changed to "+s); save(); render(); }
+  function findClient(id){ return state.clients.filter(function(x){return x.id===id;})[0]; }
+
+  /* ---------- pipeline ---------- */
+  function chip(label,on,fn,cls,count,color){
+    var b=el("button","chip"+(cls?" "+cls:"")+(on?" on":""));
+    if(color){ var d=el("span","d"); d.style.background=color; b.appendChild(d); }
+    b.appendChild(document.createTextNode(label));
+    if(count!=null) b.appendChild(el("span","n",String(count)));
+    b.addEventListener("click",fn); return b;
+  }
+  function filteredLeads(){
+    return state.clients.filter(function(c){
+      if(filt.plat&&c.platform!==filt.plat) return false;
+      if(filt.status&&c.status!==filt.status) return false;
+      if(filt.q&&(c.name+" "+c.notes+" "+c.contact+" "+c.next+" "+c.service).toLowerCase().indexOf(filt.q)===-1) return false;
+      if(filt.chip==="due"&&!followState(c)) return false;
+      if(filt.chip==="replied"&&REPLIED.indexOf(c.status)===-1) return false;
+      if(filt.chip==="value"&&!c.value) return false;
+      return true;
+    });
+  }
+  function makeKCard(c){
+    var fs=followState(c), k=el("div","kc"+(c.status==="Lost"?" faded":"")); k.draggable=true;
+    k.addEventListener("dragstart",function(e){ e.dataTransfer.setData("text/plain",c.id); });
+    k.addEventListener("click",function(e){ if(e.target.closest("button,a")) return; openLead(c.id); });
+    var l1=el("div","l1"); l1.appendChild(avatar(c));
+    var tx=el("div","tx"); tx.appendChild(el("b","",c.name));
+    tx.appendChild(el("span","small mut",c.service+" · "+c.platform+(c.value?" · "+money(c.value):""))); l1.appendChild(tx); k.appendChild(l1);
+    var l2=el("div","l2"); l2.appendChild(el("span","small mut","Touch "+c.count+" of 4"));
+    var tb=timeBadge(c); if(tb) l2.appendChild(tb); k.appendChild(l2);
+    if(fs==="overdue"){ k.appendChild(el("div","alert red","Overdue by "+dayDiff(c.follow,today())+" day"+(dayDiff(c.follow,today())>1?"s":"")+"."+(c.next?" Next: "+c.next:""))); }
+    else if(fs==="today"){ k.appendChild(el("div","alert","Follow up today."+(c.next?" Next: "+c.next:""))); }
+    else if(c.next&&!closed(c)){ k.appendChild(el("div","small mut","Next: "+c.next)); }
+    if(fs){
+      var a=el("div","acts"); linkEls(c).forEach(function(x){ a.appendChild(x); });
+      var b=el("button","btn sm green","Followed up"); b.addEventListener("click",function(){ doFollowUp(c); }); a.appendChild(b); k.appendChild(a);
+    }
+    return k;
+  }
+  function renderPipeline(){
+    var all=state.clients, list=filteredLeads();
+    var c1=$("chips1"); c1.innerHTML="";
+    var dueN=all.filter(function(c){return followState(c);}).length;
+    c1.appendChild(chip("All leads",filt.chip==="all",function(){filt.chip="all";renderPipeline();},"",all.length));
+    c1.appendChild(chip("Due now",filt.chip==="due",function(){filt.chip="due";renderPipeline();},"",dueN));
+    c1.appendChild(chip("Replied or better",filt.chip==="replied",function(){filt.chip="replied";renderPipeline();},"",all.filter(function(c){return REPLIED.indexOf(c.status)>-1;}).length));
+    c1.appendChild(chip("Has deal value",filt.chip==="value",function(){filt.chip="value";renderPipeline();},"",all.filter(function(c){return c.value;}).length));
+    if(filt.status) c1.appendChild(chip("Status: "+filt.status+"  ✕",true,function(){filt.status="";renderPipeline();}));
+    if(filt.q) c1.appendChild(chip("Search: "+filt.q+"  ✕",true,function(){filt.q="";$("search").value="";renderPipeline();}));
+    var sh=el("span","showing","Showing "+list.length+" of "+all.length+" leads"); c1.appendChild(sh);
+    var c2=$("chips2"); c2.innerHTML="";
+    state.platforms.forEach(function(p){
+      c2.appendChild(chip(p.name,filt.plat===p.name,function(){ filt.plat=filt.plat===p.name?"":p.name; renderPipeline(); },"out",all.filter(function(c){return c.platform===p.name;}).length,p.color));
+    });
+
+    var box=$("board"); box.innerHTML="";
+    STATUSES.forEach(function(s){
+      var items=list.filter(function(c){return c.status===s;});
+      items.sort(function(a,b){ return closed(a)?(b.contacted||"").localeCompare(a.contacted||""):(a.follow||"9999").localeCompare(b.follow||"9999"); });
+      var col=el("div","col"+(s==="Won"?" won":s==="Lost"?" lost":""));
+      var h=el("div","ch"); h.appendChild(el("span","",s)); h.appendChild(el("span","n",String(items.length)));
+      var dn=items.filter(function(c){return followState(c);}).length;
+      var sum=items.reduce(function(a,c){return a+c.value;},0);
+      var m=dn?dn+" due":(sum?money(sum):""); if(m) h.appendChild(el("span","m",m));
+      col.appendChild(h);
+      if(s==="Won"){
+        var ws=el("div","wonsum"), r1=el("div","r"), r2=el("div","r");
+        r1.appendChild(el("span","mut","Won so far")); r1.appendChild(el("b","",money(sum)));
+        r2.appendChild(el("span","mut","Win rate")); r2.appendChild(el("b","",(all.length?Math.round(all.filter(function(c){return c.status==="Won";}).length/all.length*100):0)+"%"));
+        var pb=el("div","pbar"),f=document.createElement("i"); f.style.width=(all.length?Math.round(all.filter(function(c){return c.status==="Won";}).length/all.length*100):0)+"%"; f.style.background="#3bb44a"; pb.appendChild(f);
+        ws.appendChild(r1); ws.appendChild(r2); ws.appendChild(pb); col.appendChild(ws);
+      }
+      items.forEach(function(c){ col.appendChild(makeKCard(c)); });
+      var add=el("button","addlead","+ Add lead"); add.addEventListener("click",function(){ openLead(null,s); }); col.appendChild(add);
+      col.addEventListener("dragover",function(e){ e.preventDefault(); col.classList.add("over"); });
+      col.addEventListener("dragleave",function(){ col.classList.remove("over"); });
+      col.addEventListener("drop",function(e){ e.preventDefault(); col.classList.remove("over"); var c=findClient(e.dataTransfer.getData("text/plain")); if(c) setStatus(c,s); });
+      box.appendChild(col);
+    });
+  }
+
+  /* ---------- schedule ---------- */
+  function renderSchedule(){
+    var dueMap={}; state.clients.forEach(function(c){ if(c.follow&&!closed(c)){ (dueMap[c.follow]=dueMap[c.follow]||[]).push(c); } });
+    $("calTitle").textContent=new Date(cal.y,cal.m,1).toLocaleDateString("en-IN",{month:"long",year:"numeric"});
+    var g=$("cal"); g.innerHTML="";
+    ["Mo","Tu","We","Th","Fr","Sa","Su"].forEach(function(d){ g.appendChild(el("div","dw",d)); });
+    var first=new Date(cal.y,cal.m,1), off=(first.getDay()+6)%7, dim=new Date(cal.y,cal.m+1,0).getDate(), cells=Math.ceil((off+dim)/7)*7, t=today();
+    for(var i=0;i<cells;i++){
+      var d=new Date(cal.y,cal.m,1-off+i), ds=ymd(d), b=el("button","cd"+(d.getMonth()!==cal.m?" out":"")+(ds===t?" today":"")+(ds===cal.sel?" sel":""),String(d.getDate()));
+      if(dueMap[ds]) b.appendChild(document.createElement("i"));
+      (function(ds){ b.addEventListener("click",function(){ cal.sel=ds; renderSchedule(); }); })(ds);
+      g.appendChild(b);
+    }
+    $("dayTitle").textContent=fmtD(cal.sel);
+    var dl=$("dayList"); dl.innerHTML="";
+    var items=dueMap[cal.sel]||[];
+    if(!items.length) dl.appendChild(el("div","empty","No follow-ups on this day."));
+    items.forEach(function(c){
+      var r=el("div","row"); r.appendChild(avatar(c));
+      var nm=el("div","nm"); nm.style.cursor="pointer"; nm.appendChild(el("b","",c.name)); nm.appendChild(el("span","small mut",c.platform+" · "+c.status)); nm.addEventListener("click",function(){ openLead(c.id); });
+      r.appendChild(nm); linkEls(c).slice(0,1).forEach(function(a){ r.appendChild(a); }); dl.appendChild(r);
+    });
+    var up=state.clients.filter(function(c){return c.follow&&!closed(c);}).sort(function(a,b){return a.follow.localeCompare(b.follow);}).slice(0,8);
+    var box=$("upc"); box.innerHTML="";
+    if(!up.length){ box.appendChild(el("div","empty","No upcoming follow-ups. Add a lead to start.")); return; }
+    up.forEach(function(c){
+      var u=el("div","uc"); u.addEventListener("click",function(){ openLead(c.id); });
+      var tp=el("div","t"), nm=el("span","n"), dt=el("span","dot"); dt.style.background=platColor(c.platform); nm.appendChild(dt); nm.appendChild(el("span","",c.name)); tp.appendChild(nm); tp.appendChild(el("span","pill",c.status)); u.appendChild(tp);
+      var fd=new Date(c.follow+"T00:00:00"), big=el("div","big",String(fd.getDate())); big.appendChild(el("small","",fd.toLocaleDateString("en-IN",{month:"long"}))); u.appendChild(big);
+      var left=dayDiff(t,c.follow), dr=el("div","dr"); dr.appendChild(el("span","","Days remaining"));
+      dr.appendChild(el("b","",left<0?(-left)+" days late":left===0?"Today":left+" Day"+(left>1?"s":""))); u.appendChild(dr);
+      var last=(c.contacted||"").slice(0,10)||t, total=Math.max(1,dayDiff(last,c.follow)), el2=dayDiff(last,t);
+      var pct=left<=0?100:Math.max(4,Math.min(100,Math.round(el2/total*100)));
+      var pb=el("div","pbar"), f=document.createElement("i"); f.style.width=pct+"%"; f.style.background=left<0?"#e5484d":left===0?"#f4c542":platColor(c.platform); pb.appendChild(f); u.appendChild(pb);
+      box.appendChild(u);
+    });
+  }
+  $("calPrev").addEventListener("click",function(){ cal.m--; if(cal.m<0){cal.m=11;cal.y--;} renderSchedule(); });
+  $("calNext").addEventListener("click",function(){ cal.m++; if(cal.m>11){cal.m=0;cal.y++;} renderSchedule(); });
+  $("calToday").addEventListener("click",function(){ var n=new Date(); cal.y=n.getFullYear(); cal.m=n.getMonth(); cal.sel=today(); renderSchedule(); });
+
+  /* ---------- playbook ---------- */
+  function fill(text){
+    var name=$("tplName").value.trim(),me=state.settings.myName||"";
+    return text.replace(/\[Name\]/g,function(){return name||"[Name]";}).replace(/\[Your name\]/g,function(){return me||"[Your name]";});
+  }
+  function renderTemplates(){
+    var box=$("tplList"); box.innerHTML="";
+    TEMPLATES.forEach(function(t){
+      var d=el("div","tpl"),top=el("div","t"); top.appendChild(el("b","",t.title)); top.appendChild(el("span","pill",t.tag));
+      var pre=el("pre","",fill(t.text)), b=el("button","btn sm","Copy"); b.addEventListener("click",function(){ copyText(pre.textContent,b); });
+      d.appendChild(top); d.appendChild(pre); d.appendChild(b); box.appendChild(d);
+    });
+    $("callScript").textContent=fill(CALL_SCRIPT);
+  }
+  function renderPlaybook(){
+    var tl=$("tipList"); tl.innerHTML="";
+    TIPS.forEach(function(t,i){ var d=el("div","tip"+(t.core?" core":"")); d.appendChild(el("div","n",String(i+1))); var w=document.createElement("div"); w.appendChild(el("b","",t.t)); w.appendChild(el("span","",t.d)); d.appendChild(w); tl.appendChild(d); });
+    renderTemplates();
+    var ob=$("objList"); ob.innerHTML=""; OBJ.forEach(function(o){ var d=el("div","q"); d.appendChild(el("b","",o.q)); d.appendChild(el("span","",o.a)); ob.appendChild(d); });
+    var cd=$("cadence"); cd.innerHTML="";
+    CADENCE.forEach(function(s){ var d=el("div","step"); d.appendChild(el("div","d",s.d)); var w=document.createElement("div"); w.innerHTML=s.t; d.appendChild(w); cd.appendChild(d); });
+    var cb=$("checklist"); cb.innerHTML="";
+    CHECK.forEach(function(t,i){ var l=el("label","chk"),c=document.createElement("input"); c.type="checkbox"; c.checked=!!state.settings.check[i]; c.addEventListener("change",function(){ state.settings.check[i]=c.checked; save(); }); l.appendChild(c); l.appendChild(el("span","",t)); cb.appendChild(l); });
+  }
+  $("pbTabs").addEventListener("click",function(e){
+    var t=e.target.getAttribute("data-tab"); if(!t) return;
+    Array.prototype.forEach.call($("pbTabs").children,function(b){ b.classList.toggle("on",b===e.target); });
+    ["tips","scripts","plan"].forEach(function(n){ $("tab-"+n).style.display=n===t?"":"none"; });
+  });
+  $("copyCall").addEventListener("click",function(e){ copyText($("callScript").textContent,e.target); });
+  $("tplName").addEventListener("input",renderTemplates);
+  function setMyName(v){ state.settings.myName=v.trim(); save(); $("tplMe").value=v; $("setName").value=v; renderTemplates(); lastMinute=-1; tick(); }
+  $("tplMe").addEventListener("input",function(){ setMyName($("tplMe").value); });
+  $("setName").addEventListener("input",function(){ setMyName($("setName").value); });
+
+  /* ---------- settings ---------- */
+  $("goalIn").addEventListener("change",function(){ state.settings.goal=Math.max(1,Number($("goalIn").value)||10); save(); });
+  function renderSettings(){
+    $("goalIn").value=Number(state.settings.goal)||10; $("setName").value=state.settings.myName; $("tplMe").value=state.settings.myName;
+    var box=$("platforms"); box.innerHTML="";
+    state.platforms.forEach(function(p,i){
+      var w=el("div","plat"),c=document.createElement("input"); c.type="color"; c.value=p.color;
+      c.addEventListener("change",function(){ state.platforms[i].color=c.value; save(); });
+      var x=el("button","btn sm","x"); x.title="Remove platform"; x.addEventListener("click",function(){ if(state.platforms.length<=1) return; state.platforms.splice(i,1); save(); render(); });
+      w.appendChild(c); w.appendChild(el("span","",p.name)); w.appendChild(x); box.appendChild(w);
+    });
+  }
+  $("platAdd").addEventListener("click",function(){
+    var n=$("newPlat").value.trim(); if(!n) return;
+    for(var i=0;i<state.platforms.length;i++) if(state.platforms[i].name.toLowerCase()===n.toLowerCase()) return;
+    state.platforms.push({name:n,color:$("newPlatColor").value}); $("newPlat").value=""; save(); render();
+  });
+  function download(name,type,text){ var a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([text],{type:type})); a.download=name; a.click(); }
+  $("csvBtn").addEventListener("click",function(){
+    var rows=[["Name","Contact","Platform","Service","Status","Value","Touches","Last contact","Follow up","Next action","Notes"]];
+    state.clients.forEach(function(c){ rows.push([c.name,c.contact,c.platform,c.service,c.status,c.value,c.count,c.contacted,c.follow,c.next,c.notes]); });
+    download("clients.csv","text/csv",rows.map(function(r){return r.map(function(x){return '"'+String(x==null?"":x).replace(/"/g,'""')+'"';}).join(",");}).join("\n"));
+  });
+  $("jsonBtn").addEventListener("click",function(){ download("outreach-backup-"+today()+".json","application/json",JSON.stringify(state,null,2)); });
+  $("importBtn").addEventListener("click",function(){ $("importFile").click(); });
+  $("importFile").addEventListener("change",function(){
+    var f=$("importFile").files[0]; if(!f) return; var r=new FileReader();
+    r.onload=function(){
+      try{
+        var s=JSON.parse(r.result);
+        if(!s||!Array.isArray(s.clients)||!Array.isArray(s.todos)||!Array.isArray(s.platforms)) throw new Error("bad");
+        if(!confirm("Replace your current data with this backup?")) return;
+        state=normalize(s); save(); render();
+      }catch(e){ alert("That file is not a valid backup."); }
+    };
+    r.readAsText(f); $("importFile").value="";
+  });
+  function askNotif(){
+    if(!("Notification" in window)){ alert("This browser does not support notifications."); return; }
+    Notification.requestPermission().then(function(p){ $("notifBtn").textContent=p==="granted"?"Browser reminders on":"Reminders blocked"; if(p==="granted") checkReminders(true); });
+  }
+  $("notifBtn").addEventListener("click",askNotif); $("bellBtn").addEventListener("click",askNotif);
+  var notified={};
+  function checkReminders(force){
+    render();
+    if(!("Notification" in window)||Notification.permission!=="granted") return;
+    var day=today();
+    state.clients.forEach(function(c){
+      var f=followState(c); if(!f) return; var k=c.id+day; if(notified[k]&&!force) return; notified[k]=true;
+      try{ new Notification("Follow up: "+c.name,{body:c.platform+" · "+c.status+(f==="overdue"?" (overdue)":" (today)")}); }catch(e){}
+    });
+  }
+
+  /* ---------- lead modal ---------- */
+  var editing=null, dlg=$("leadDlg");
+  function openLead(id,preset){
+    editing=id?findClient(id):null;
+    var c=editing;
+    $("m_platform").innerHTML=""; state.platforms.forEach(function(p){ var o=el("option","",p.name); o.value=p.name; $("m_platform").appendChild(o); });
+    $("m_status").innerHTML=""; STATUSES.forEach(function(s){ var o=el("option","",s); o.value=s; $("m_status").appendChild(o); });
+    $("m_title").textContent=c?c.name:"New lead";
+    $("m_name").value=c?c.name:""; $("m_contact").value=c?c.contact:"";
+    $("m_platform").value=c?c.platform:state.platforms[0].name; $("m_service").value=c?c.service:"Website";
+    $("m_status").value=c?c.status:(preset||"Messaged");
+    $("m_contacted").value=c?(c.contacted||nowLocalInput()):nowLocalInput();
+    $("m_follow").value=c?(c.follow||""):""; $("m_next").value=c?c.next:""; $("m_value").value=c&&c.value?c.value:""; $("m_notes").value=c?c.notes:"";
+    $("m_done").style.display=c?"":"none"; $("m_del").style.display=c?"":"none";
+    var lk=$("m_links"); lk.innerHTML=""; if(c) linkEls(c).forEach(function(a){ a.className="btn sm"; a.style.textDecoration="none"; lk.appendChild(a); });
+    var lg=$("m_log"); lg.innerHTML="";
+    if(c&&c.log.length){ c.log.slice().reverse().forEach(function(l){ lg.appendChild(el("div","",fmtDT(l.t)+" · "+l.text)); }); lg.style.display=""; } else lg.style.display="none";
+    if(typeof dlg.showModal==="function") dlg.showModal(); else dlg.setAttribute("open","");
+    setTimeout(function(){ $("m_name").focus(); },30);
+  }
+  function closeLead(){ if(typeof dlg.close==="function") dlg.close(); else dlg.removeAttribute("open"); editing=null; }
+  $("newBtn").addEventListener("click",function(){ openLead(null); });
+  $("m_x").addEventListener("click",closeLead);
+  dlg.addEventListener("click",function(e){ if(e.target===dlg) closeLead(); });
+  $("leadForm").addEventListener("submit",function(ev){
+    ev.preventDefault();
+    var name=$("m_name").value.trim(); if(!name) return;
+    var data={name:name,contact:$("m_contact").value.trim(),platform:$("m_platform").value,service:$("m_service").value,status:$("m_status").value,contacted:$("m_contacted").value,follow:$("m_follow").value,next:$("m_next").value.trim(),value:Number($("m_value").value)||0,notes:$("m_notes").value.trim()};
+    if(editing){
+      var oldStatus=editing.status; Object.assign(editing,data);
+      if(oldStatus!==data.status) addLog(editing,"status","Status changed to "+data.status);
+    } else {
+      var c={id:uid(),count:1,log:[]}; Object.assign(c,data); if(!c.follow) c.follow=addDays(2);
+      addLog(c,"contact","First contact via "+c.platform,c.contacted); state.clients.push(c);
+    }
+    save(); closeLead(); render();
+  });
+  $("m_done").addEventListener("click",function(){ if(editing){ doFollowUp(editing); closeLead(); } });
+  $("m_del").addEventListener("click",function(){ if(editing&&confirm("Delete "+editing.name+"?")){ state.clients=state.clients.filter(function(x){return x.id!==editing.id;}); save(); closeLead(); render(); } });
+
+  /* ---------- boot ---------- */
+  function render(){
+    var due=state.clients.filter(function(c){return followState(c);}).length;
+    $("dueBadge").textContent=due?String(due):"";
+    document.title=(due?"("+due+") ":"")+"Outreach HQ";
+    if(page==="overview") renderOverview();
+    else if(page==="pipeline") renderPipeline();
+    else if(page==="schedule") renderSchedule();
+    else if(page==="settings") renderSettings();
+  }
+  renderPlaybook(); renderSettings(); render(); tick(); setInterval(tick,1000);
+  setInterval(function(){ checkReminders(false); },60000);
+  if("Notification" in window&&Notification.permission==="granted") $("notifBtn").textContent="Browser reminders on";
+  window.__dash={go:go,openLead:openLead,state:function(){return state;}};
+})();
+</script>
+</body>
+</html>
